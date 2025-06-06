@@ -1,0 +1,103 @@
+1
+5
+INORDEN juan camila santiago mariana pedro 
+PREORDEN santiago camila juan mariana pedro 
+juan mariana pedro 
+POSTORDEN laura jose fernando esteban carla 
+INORDEN laura fernando jose carla esteban 
+laura jose carla
+INORDEN juan camila santiago mariana pedro 
+PREORDEN santiago camila juan mariana pedro 
+juan mariana pedro 
+POSTORDEN laura jose fernando esteban carla 
+INORDEN laura fernando jose carla esteban 
+laura jose carla
+POSTORDEN laura jose fernando esteban carla 
+INORDEN laura fernando jose carla esteban 
+laura jose carla
+
+1
+INORDEN null undefined NaN Infinity error exception
+PREORDEN error null undefined NaN exception Infinity
+null Infinity
+
+10
+2
+INORDEN B A C
+PREORDEN A B C
+A C
+INORDEN Y X Z
+POSTORDEN X Z Y
+X Z
+
+3
+INORDEN a
+PREORDEN a
+a
+INORDEN X Y
+POSTORDEN Y X
+X Y
+INORDEN 1 2 3 4 5
+PREORDEN 3 1 2 4 5
+1 3 5
+
+2
+INORDEN Z Z Z Z Z
+PREORDEN Z Z Z Z Z
+Z Z
+INORDEN 1 2 3 4 5 6 7 8 9 10
+POSTORDEN 1 3 2 5 7 6 4 10 9 8
+1 5 10
+
+2
+INORDEN p q r s t u v
+PREORDEN p q r s t u v
+p s v
+POSTORDEN g f e d c b a
+INORDEN a b c d e f g
+a d g
+
+3
+INORDEN 10 5 15 3 7 12 17
+PREORDEN 10 5 3 7 15 12 17
+3 12 17
+POSTORDEN 3 7 5 12 17 15 10
+INORDEN 3 5 7 10 12 15 17
+3 12 17
+INORDEN alfa gamma beta delta
+PREORDEN beta alfa gamma delta
+alfa delta
+
+2
+INORDEN A A B C D
+PREORDEN A A B C D
+A D
+INORDEN 1 2 3 3 4 5
+POSTORDEN 2 3 1 5 4 3
+1 5
+
+2
+INORDEN 100 50 25 75 150 125 175
+PREORDEN 100 50 25 75 150 125 175
+25 125
+INORDEN 26 12 32 4 18 5 16
+POSTORDEN 5 18 16 4 32 12 26
+4 26
+
+2
+INORDEN 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+PREORDEN 8 4 2 1 3 6 5 7 12 10 9 11 14 13 15
+1 8 15
+INORDEN a b c d e f g h i j k l m n o
+POSTORDEN a b c d e f g h i j k l m n o
+a h o
+
+1
+INORDEN M L N K O J P I Q H R G S F T E U D V C W B X A Y Z
+PREORDEN A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+A M Z
+
+1
+INORDEN null undefined NaN Infinity error exception
+PREORDEN error null undefined NaN exception Infinity
+null Infinity
