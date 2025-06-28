@@ -1,0 +1,7 @@
+RESTRINGIDO = [C,D]
+A B 10
+A C 30
+A D 90
+B E 20
+C E 90
+D E 20
