@@ -1,0 +1,35 @@
+1- Sea A un arbol n-ario de entero, y N un numero perteneciente al arbol. Cree la funcion:
+	func arbolN<entero>::getPrimos(n): Lista<entero>
+que devuelva todos los primos de n (aquellos nodos que son hijos de los tios de n). Utilice
+apuntadores en su solucion. O(n)
+
+2- Diámetro de un árbol binario: Calcula el diámetro (la longitud del camino más largo entre 
+dos nodos cualesquiera) de un árbol binario. O(n)
+
+3- Dado un arbol binario, verificar si este es binario de busqueda. O(n)
+
+4- Dado un arbol binario, verificar si este es AVL. O(n)
+
+5- Dado un arbol N-ario de entero y 2 numeros n y m pertenecientes al arbol. Encontrar el 
+camino entre ellos 2. O(n).
+
+6- Dada una lista. Ordenarla usando arboles (sin utilizar apuntadores). Asuma para este ejercicio
+que todas las clases arboles tienen un metodo Preorden, Inorden y Postorden que devuelven una lista
+con el recorrido. Debe crear la funcion:
+	func ordenar(lista<entero>: l, tipo: cadena): lista<entero>
+En donde el parametro "tipo" puede tomar cualquiera de los siguientes valores ["ascendente", "descendente"].
+La solucion debe ser a lo sumo O(nlog(n)).
+
+7- Convertir un árbol n-ario en un árbol de suma: Modifica un árbol binario tal que cada nodo contiene 
+la suma de los valores de todos los nodos en su subárbol. O(n).
+
+8- Recorrido en Zig-zag: dado un arbol binario, Impresión del árbol binario en orden zigzag: recorrer 
+los niveles de un árbol binario en un orden zigzag (nivel 1 de izquierda a derecha, nivel 2 de derecha a 
+izquierda, y así sucesivamente). Debe ser a lo sumo O(n).
+
+9- Encuentra el camino en un árbol binario que tiene la suma máxima de valores de nodos. O(n).
+
+10- Reconstruye un árbol binario a partir de su representación en forma de matriz de adyacencia:
+	func arbolBin<entero>::construir(arreglo[1..n][1..n] de entero: matrizAdy)
+Debe construirlo a lo sumo en O(n^2)
+

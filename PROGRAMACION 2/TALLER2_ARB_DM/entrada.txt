@@ -1,0 +1,8 @@
+1
+2
+INORDEN juan camila santiago mariana pedro 
+PREORDEN santiago camila juan mariana pedro 
+juan mariana pedro 
+POSTORDEN laura jose fernando esteban carla 
+INORDEN laura fernando jose carla esteban 
+laura jose carla

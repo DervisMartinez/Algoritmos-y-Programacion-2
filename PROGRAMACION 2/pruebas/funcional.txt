@@ -1,0 +1,80 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <map>
+#include <set>
+#include "grafoNoDirigido.hpp"
+
+using namespace std;
+
+
+list<string> encontrarConjuntoDominanteOptimo(GrafoNoDirigido<string>& grafo) {
+    list<string> vertices = grafo.vertices();
+    vector<string> mapeo;
+    GrafoNoDirigido<int> grafoMapeado = grafo.mapear(&mapeo);
+    vector<int> indices;
+    for (int i = 0; i < grafo.getNVertices(); i++) {
+        indices.push_back(i);
+    }
+     
+
+    for (size_t k = 1; k <= grafo.getNVertices(); k++) {
+        vector<bool> mask(indices.size(), false);
+        fill(mask.begin(), mask.begin() + k, true);
+        
+        do {
+            set<int> candidatos;
+            for (size_t i = 0; i < mask.size(); ++i) {
+                if (mask[i]) {
+                    candidatos.insert(indices[i]);
+                }
+            }
+            
+            set<int> cubiertos = candidatos;
+            for (int v : candidatos) {
+                list<int> vecinos = grafoMapeado.vecinos(v);
+                for (int u : vecinos) {
+                    cubiertos.insert(u);
+                }
+            }
+            
+            if (cubiertos.size() == grafo.getNVertices()) {
+                list<string> resultado;
+                for (int v : candidatos) {
+                    resultado.push_back(mapeo[v]);
+                }
+                resultado.sort();
+                return resultado;
+            }
+        } while (prev_permutation(mask.begin(), mask.end()));
+    }
+    
+    vertices.sort();
+    return vertices;
+}
+
+int main() {
+    GrafoNoDirigido<string> grafo;
+    string pueblo1, pueblo2;
+    
+    while (cin >> pueblo1 >> pueblo2) {
+        grafo.agregarVertice(pueblo1);
+        grafo.agregarVertice(pueblo2);
+        grafo.agregarArcoND(pueblo1, pueblo2);
+    }
+
+    list<string> conjuntoDominante = encontrarConjuntoDominanteOptimo(grafo);
+    
+    bool primero = true;
+    for (const string& pueblo : conjuntoDominante) {
+        if (!primero) {
+            cout << " ";
+        }
+        cout << pueblo;
+        primero = false;
+    }
+    cout << endl;
+    
+    return 0;
+}

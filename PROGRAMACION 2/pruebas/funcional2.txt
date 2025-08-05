@@ -1,0 +1,139 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <list>
+#include <unordered_set>
+#include <algorithm>
+#include <chrono> 
+#include "grafoNoDirigido.hpp" 
+
+using namespace std;
+
+void encontrarMDSRecursivo(
+    int k,
+    const vector<string>& verticesOrdenados,
+    vector<string>& conjuntoActual,
+    vector<string>& mejorConjunto,
+    unordered_set<string>& noCubiertos,
+    GrafoNoDirigido<string>& grafo)
+{
+   
+    if (!mejorConjunto.empty() && conjuntoActual.size() >= mejorConjunto.size()) {
+        return;
+    }
+
+    if (noCubiertos.empty()) {
+        if (mejorConjunto.empty() || conjuntoActual.size() < mejorConjunto.size()) {
+            mejorConjunto = conjuntoActual;
+        }
+        return;
+    }
+
+    if (k == verticesOrdenados.size()) {
+        return;
+    }
+
+    const string& verticeActual = verticesOrdenados[k];
+
+    vector<string> nuevosCubiertosPorEsteVertice;
+    if (noCubiertos.count(verticeActual)) {
+        nuevosCubiertosPorEsteVertice.push_back(verticeActual);
+    }
+    list<string> vecinos = grafo.vecinos(verticeActual);
+    for (const string& vecino : vecinos) {
+        if (noCubiertos.count(vecino)) {
+             // Evita duplicados en nuevosCubiertosPorEsteVertice (aunque el set noCubiertos ya filtra)
+             bool ya_anadido = false;
+             for(const string& ya_en_lista : nuevosCubiertosPorEsteVertice) {
+                 if (ya_en_lista == vecino) {
+                     ya_anadido = true;
+                     break;
+                 }
+             }
+             if (!ya_anadido) {
+                 nuevosCubiertosPorEsteVertice.push_back(vecino);
+             }
+        }
+    }
+
+    if (!nuevosCubiertosPorEsteVertice.empty()) {
+        conjuntoActual.push_back(verticeActual);
+        for (const string& cubierto : nuevosCubiertosPorEsteVertice) {
+            noCubiertos.erase(cubierto);
+        }
+        encontrarMDSRecursivo(k + 1, verticesOrdenados, conjuntoActual, mejorConjunto, noCubiertos, grafo);
+        conjuntoActual.pop_back();
+        for (const string& cubierto : nuevosCubiertosPorEsteVertice) {
+            noCubiertos.insert(cubierto);
+        }
+    }
+
+    // Opción 2: Excluir 'verticeActual'
+    encontrarMDSRecursivo(k + 1, verticesOrdenados, conjuntoActual, mejorConjunto, noCubiertos, grafo);
+}
+
+// Función auxiliar para inicializar y lanzar el backtracking
+list<string> encontrarConjuntoDominanteMinimoExacto(GrafoNoDirigido<string>& grafo) {
+    list<string> verticesList = grafo.vertices();
+    if (verticesList.empty()) {
+        return {};
+    }
+
+    vector<string> verticesOrdenados(verticesList.begin(), verticesList.end());
+    sort(verticesOrdenados.begin(), verticesOrdenados.end());
+
+    unordered_set<string> noCubiertos(verticesOrdenados.begin(), verticesOrdenados.end());
+    vector<string> conjuntoActual;
+    conjuntoActual.reserve(verticesOrdenados.size());
+    vector<string> mejorConjunto = verticesOrdenados;
+
+    encontrarMDSRecursivo(0, verticesOrdenados, conjuntoActual, mejorConjunto, noCubiertos, grafo);
+    sort(mejorConjunto.begin(), mejorConjunto.end());
+    list<string> resultadoFinal(mejorConjunto.begin(), mejorConjunto.end());
+    return resultadoFinal;
+}
+
+// Función para leer las conexiones desde un stream (archivo o cin) y construir el grafo
+void procesarEntrada(istream& entrada, GrafoNoDirigido<string>& grafo) {
+    string pueblo1, pueblo2;
+    while (entrada >> pueblo1 >> pueblo2) {
+        grafo.agregarVertice(pueblo1);
+        grafo.agregarVertice(pueblo2);
+        grafo.agregarArcoND(pueblo1, pueblo2);
+    }
+}
+
+// --- Función Principal ---
+int main(int argc, char* argv[]) {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    GrafoNoDirigido<string> grafo;
+
+    if (argc > 1) {
+        for (int i = 1; i < argc; ++i) {
+            ifstream archivo(argv[i]);
+            if (!archivo) {
+                cerr << "Error: No se pudo abrir el archivo '" << argv[i] << "'" << endl;
+                return 1;
+            }
+            procesarEntrada(archivo, grafo);
+            archivo.close();
+        }
+    } else {
+        procesarEntrada(cin, grafo);
+    }
+
+    list<string> resultado = encontrarConjuntoDominanteMinimoExacto(grafo);
+    if (!resultado.empty()) {
+        auto it = resultado.begin();
+        cout << *it;
+        for (++it; it != resultado.end(); ++it) {
+            cout << " " << *it;
+        }
+    }
+    cout << endl;
+
+    return 0;
+}
